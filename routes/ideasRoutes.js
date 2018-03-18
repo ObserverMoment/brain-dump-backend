@@ -21,6 +21,7 @@ router.post('/create', (req, res) => {
 
   const { title, body, author } = req.body;
   // TODO. Check to see if the idea name already exists.
+  // How to combine this with the add blank idea functionality.
   // Make the model instance.
   let newIdea = new IdeaModel({
     title,
@@ -30,7 +31,8 @@ router.post('/create', (req, res) => {
   })
   newIdea.save()
           .then(response => {
-            res.send(`New idea made called: ${response.title}`);
+            console.log(`New idea made called: ${response.title}`);
+            res.json(response);
           })
           .catch(err => {
             res.send(`Something went wrong: ${err}`);
@@ -77,7 +79,7 @@ router.put('/:id', (req, res) => {
 // Delete
 router.delete('/:id', (req, res) => {
   IdeaModel.findByIdAndRemove(req.params.id).then(removed => {
-    res.send(`Idea deleted: ${removed._id}`);
+    res.send(removed._id);
   }).catch(err => {
     res.send("Sorry something went wrong. Please try again.");
   })

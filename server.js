@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const path = require('path');
 const morgan = require('morgan');
+const cors = require('cors');
 
 // Import config variables.
 const { port, frontEndUrl, databaseUri } = require('./config/env.js');
@@ -13,6 +14,8 @@ const app = express();
 // Set up the body parser middleware for both post forms and JSON responses.
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+// Allow cross origin calls to the endpoints.
+app.use(cors())
 
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));

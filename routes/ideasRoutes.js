@@ -71,9 +71,7 @@ router.put('/:id', (req, res) => {
   const { title, body, author } = req.body;
   const updatedIdea = { title, body, author };
   IdeaModel.findOneAndUpdate({ _id: req.params.id }, updatedIdea, { new: true })
-            .then(updatedIdea => {
-              res.send(`Idea '${updatedIdea.title}', has been updated.`);
-            })
+            .then(updatedIdea => res.send("Idea Updated"));
 });
 
 // Delete

@@ -5,8 +5,8 @@ const path = require('path');
 const morgan = require('morgan');
 const cors = require('cors');
 
-// Import config variables.
-const { port, frontEndUrl, databaseUri } = require('./config/env.js');
+// Import config variables depening on development or production (local or heroku).
+const { PORT, DATABASE_URI, CLIENT_URL } = require('./config/envInit');
 
 // Create express app.
 const app = express();
@@ -31,12 +31,12 @@ app.use('/ideas', ideasRoutes);
 
 // Setup the mongoDB connection and then once connected listen on the stated port.
 mongoose.Promise = Promise; // Use global promise library.
-mongoose.connect(databaseUri);
+mongoose.connect(DATABASE_URI);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {
   // we're connected!
-  app.listen(port, () => {
-    console.log(`Listening on port ${port}.`);
+  app.listen(PORT, () => {
+    console.log(`Listening on port ${PORT}.`);
   });
 });
